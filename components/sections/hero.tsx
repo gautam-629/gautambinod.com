@@ -149,7 +149,7 @@ export function Hero() {
           >
             <Avatar className="w-full h-full">
               <AvatarImage
-                src="https://avatars.githubusercontent.com/u/109918405?v=4"
+                src="/profileImg/profile.jpg"
                 alt="Binod Gautam"
                 className="object-cover"
               />

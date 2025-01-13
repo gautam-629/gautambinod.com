@@ -89,7 +89,7 @@ export function Nav() {
       animate="visible"
       variants={navVariants}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-10">
         <div className="flex items-center justify-between h-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -99,7 +99,7 @@ export function Nav() {
             BG
           </motion.div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 px-10">
             {navItems.map((item) => (
               <motion.a
                 key={item.name}

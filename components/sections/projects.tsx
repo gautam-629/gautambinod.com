@@ -21,7 +21,7 @@ const projects = [
       "Built a full-stack e-commerce application where users can search, filter, and order products. Admins can perform CRUD operations on products, users, and categories, with integrated payment functionality.",
     skills: ["React", "Express", "Node", "MongoDB"],
     source: "https://github.com/gautam-629/MERN-Ecommerce",
-    image: "/api/placeholder/800/400", // Using placeholder for demo
+    image: "/projectImg/ecommerce.png", // Using placeholder for demo
   },
   {
     semester: "6th sem",
@@ -30,7 +30,7 @@ const projects = [
       "MERN Stack web application connecting service seekers and service providers. Service seekers can search for services, while service providers can create services and request to hire service seekers.",
     skills: ["React", "Express", "Node", "MongoDB", "TailwindCSS"],
     source: "https://github.com/gautam-629/Sayogi",
-    image: "/api/placeholder/800/400", // Using placeholder for demo
+    image: "/projectImg/sayogi.png", // Using placeholder for demo
   },
   {
     semester: "8th sem",
@@ -39,7 +39,7 @@ const projects = [
       "Eco-Trekking is a dynamic web platform connecting outdoor enthusiasts with sustainable hiking experiences. The application features interactive route planning, eco-friendly accommodation listings, and community-driven content.",
     skills: ["React", "Express", "TypeScript", "TailwindCSS", "Next.js"],
     source: "https://github.com/gautam-629/eco-tracking-server.git",
-    image: "/api/placeholder/800/400", // Using placeholder for demo
+    image: "/projectImg/eco-tracking.jpg", // Using placeholder for demo
   },
 ];
 
