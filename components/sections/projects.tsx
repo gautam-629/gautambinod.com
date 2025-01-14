@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, FileText } from "lucide-react";
 import Image from "next/image";
 
 const projects = [
@@ -21,7 +21,8 @@ const projects = [
       "Built a full-stack e-commerce application where users can search, filter, and order products. Admins can perform CRUD operations on products, users, and categories, with integrated payment functionality.",
     skills: ["React", "Express", "Node", "MongoDB"],
     source: "https://github.com/gautam-629/MERN-Ecommerce",
-    image: "/projectImg/ecommerce.png", // Using placeholder for demo
+    docs: "https://drive.google.com/file/d/1IXEvLWtgFJjFuYg_lf4egLe1HmLWnrjZ/view?usp=sharing",
+    image: "/projectImg/ecommerce.png",
   },
   {
     semester: "6th sem",
@@ -30,7 +31,8 @@ const projects = [
       "MERN Stack web application connecting service seekers and service providers. Service seekers can search for services, while service providers can create services and request to hire service seekers.",
     skills: ["React", "Express", "Node", "MongoDB", "TailwindCSS"],
     source: "https://github.com/gautam-629/Sayogi",
-    image: "/projectImg/sayogi.png", // Using placeholder for demo
+    docs: "https://drive.google.com/file/d/1pl-QstOND9exxSCd0AilY21NGPGTVXHx/view?usp=sharing",
+    image: "/projectImg/sayogi.png",
   },
   {
     semester: "8th sem",
@@ -39,7 +41,8 @@ const projects = [
       "Eco-Trekking is a dynamic web platform connecting outdoor enthusiasts with sustainable hiking experiences. The application features interactive route planning, eco-friendly accommodation listings, and community-driven content.",
     skills: ["React", "Express", "TypeScript", "TailwindCSS", "Next.js"],
     source: "https://github.com/gautam-629/eco-tracking-server.git",
-    image: "/projectImg/eco-tracking.jpg", // Using placeholder for demo
+    docs: "https://drive.google.com/file/d/1jx7tRXp6G4aPlUMf6PTBf58bB6G-0Ipz/view?usp=sharing",
+    image: "/projectImg/eco-tracking.jpg",
   },
 ];
 
@@ -53,9 +56,9 @@ export function Projects() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4">Projects</h2>
+          <h2 className="text-3xl font-bold mb-4">Academic Projects</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my recent development work
+            A showcase of my Academic development work
           </p>
         </motion.div>
 
@@ -76,7 +79,7 @@ export function Projects() {
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4">
                     <Button
                       variant="secondary"
                       size="sm"
@@ -93,6 +96,22 @@ export function Projects() {
                         View Project
                       </a>
                     </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                      asChild
+                    >
+                      <a
+                        href={project.docs}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                      >
+                        <FileText className="h-4 w-4" />
+                        Documentation
+                      </a>
+                    </Button>
                   </div>
                 </div>
 
@@ -104,21 +123,38 @@ export function Projects() {
                       </CardTitle>
                       <CardDescription>{project.semester}</CardDescription>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      asChild
-                    >
-                      <a
-                        href={project.source}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="View source code"
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        asChild
                       >
-                        <Github className="h-4 w-4" />
-                      </a>
-                    </Button>
+                        <a
+                          href={project.docs}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="View documentation"
+                        >
+                          <FileText className="h-4 w-4" />
+                        </a>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        asChild
+                      >
+                        <a
+                          href={project.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="View source code"
+                        >
+                          <Github className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
 

@@ -32,7 +32,7 @@ const experiences = [
     experiences: [
       "Migrated React app to Next.js and built an admin dashboard from scratch using React, TypeScript, Ant Design, TailwindCSS, and React Query for reporting purposes.",
       "Developed Kumeji Map, a digital map for Kumejima Island, from scratch using React, TailwindCSS, and Leaflet.js, featuring 3D/VR content and interactive quizzes to boost user engagement.",
-      "Built a chat application from scratch using Next.js, TypeScript, Shadcdn, TailwindCSS, React, and React Query, focusing on seamless real-time communication.",
+      "I built a real-time chat app using Next.js, TypeScript, TailwindCSS, React, Express.js, and Colyseus, and contributed to backend development for seamless communication.",
       "Enhanced the Khumbu app by contributing to the design and development, connecting partners and providers using React, Redux, and TypeScript, improving service accessibility and collaboration.",
     ],
   },
