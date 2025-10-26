@@ -33,7 +33,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     setIsVisible(true);
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: { clientX: any; clientY: any }) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener("mousemove", handleMouseMove);
