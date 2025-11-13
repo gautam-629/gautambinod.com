@@ -89,19 +89,27 @@ export default function Portfolio() {
       link: "https://rpa.hamrohr.com",
       gradient: "from-green-500 to-emerald-500",
     },
-    {
-      name: "Khumbu",
-      description: "Khumbu connects the restaurant tech world",
-      tech: ["React", "Node.js"],
-      link: "https://www.khumbu.com",
-      gradient: "from-orange-500 to-red-500",
-    },
+
     {
       name: "Mobile Khaata",
       description: "Frontend for digital ledger app",
       tech: ["React", "Redux", "Tailwind CSS", "Express"],
       link: "https://business.mobilekhaata.com",
       gradient: "from-indigo-500 to-purple-500",
+    },
+    {
+      name: "Job Portal",
+      description: "Job Portal Website",
+      tech: ["React", "Next Js", "Mysql"],
+      link: "https://jobaxle.com/auth/login",
+      gradient: "from-green-500 to-emerald-500",
+    },
+    {
+      name: "Khumbu",
+      description: "Khumbu connects the restaurant tech world",
+      tech: ["React", "Node.js"],
+      link: "https://www.khumbu.com",
+      gradient: "from-orange-500 to-red-500",
     },
   ];
 
@@ -175,13 +183,14 @@ export default function Portfolio() {
             />
 
             <p className="text-2xl sm:text-3xl text-slate-300 max-w-4xl mx-auto mb-6 leading-relaxed font-light">
-              Frontend-Focused Full Stack Developer
+              Full Stack Developer
             </p>
 
             <p className="text-lg text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-              Crafting pixel-perfect, high-performance web experiences with
-              React, Next.js, and TypeScript. Passionate about clean code,
-              seamless APIs, and exceptional user experiences.
+              Full Stack Developer with expertise in React.js, Next.js,
+              TypeScript, NestJS, Express.js, and databases. Experienced in
+              building scalable web applications with clean code, efficient
+              APIs, and responsive user interfaces.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
