@@ -79,7 +79,7 @@ export const projects: Project[] = [
   },
   {
     name: "Photobooth",
-    description: "Interactive tourism map with 3D/VR and quizzes",
+    description: "A customizable photo booth system where admins can create booths, design frames, and assign frames to specific booths. The Unity-based booth application captures photos directly into predefined frame slots, ensuring accurate placement and a professional final output.",
     tech: ["React", "fabric.js", "Tailwind CSS"],
     link: "https://photo-stg-admin.chvps3.aozora-okinawa.com/",
     gradient: "from-orange-500 to-red-500",
