@@ -74,7 +74,7 @@ async function main() {
         subtitle:
           "Building scalable frontend interfaces and robust backend architectures.",
         description:
-          "2.5+ years of experience with React.js, Next.js, TypeScript, NestJS, Express.js, and Sockets. Experienced in database optimization, containerization (Docker), and AWS cloud SRE.",
+          "Full Stack Developer with 2.5+ years of experience building scalable, production-ready applications across frontend and backend systems. Proficient in React.js, Next.js, TypeScript, NestJS, and Express.js.",
         primaryCTAText: "View My Work",
         primaryCTAUrl: "/projects",
         secondaryCTAText: "Hire Me",
@@ -90,7 +90,7 @@ async function main() {
         subtitle:
           "Building scalable frontend interfaces and robust backend architectures.",
         description:
-          "2.5+ years of experience with React.js, Next.js, TypeScript, NestJS, Express.js, and Sockets. Experienced in database optimization, containerization (Docker), and AWS cloud SRE.",
+          "Full Stack Developer with 2.5+ years of experience building scalable, production-ready applications across frontend and backend systems. Proficient in React.js, Next.js, TypeScript, NestJS, and Express.js.",
       }
     });
   }
@@ -135,7 +135,7 @@ async function main() {
   const socialCount = await prisma.socialLink.count();
   if (socialCount === 0) {
     const socialLinks = [
-      { platform: "GitHub", url: "https://github.com/gautambinod", icon: "Github", displayOrder: 1 },
+      { platform: "GitHub", url: "https://github.com/gautam-629", icon: "Github", displayOrder: 1 },
       { platform: "LinkedIn", url: "https://linkedin.com/in/gautam-629", icon: "Linkedin", displayOrder: 2 },
       { platform: "Email", url: "mailto:gautambinod629@gmail.com", icon: "Mail", displayOrder: 3 },
     ];
@@ -195,7 +195,7 @@ async function main() {
     { name: "TypeORM", slug: "typeorm", categoryId: dbCat.id, level: SkillLevel.INTERMEDIATE, proficiency: 75, yearsOfExp: 1, displayOrder: 5 },
 
     // DevOps & Cloud
-    { name: "GitHub Actions", slug: "github-actions", categoryId: devopsCat.id, level: SkillLevel.INTERMEDIATE, proficiency: 75, yearsOfExp: 1, displayOrder: 1 },
+    { name: "GitHub Actions (CI/CD)", slug: "github-actions", categoryId: devopsCat.id, level: SkillLevel.INTERMEDIATE, proficiency: 75, yearsOfExp: 1, displayOrder: 1 },
     { name: "AWS (EC2, S3)", slug: "aws", categoryId: devopsCat.id, level: SkillLevel.INTERMEDIATE, proficiency: 72, yearsOfExp: 1, displayOrder: 2 },
     { name: "Docker", slug: "docker", categoryId: devopsCat.id, level: SkillLevel.INTERMEDIATE, proficiency: 70, yearsOfExp: 1, displayOrder: 3 },
 
@@ -203,12 +203,23 @@ async function main() {
     { name: "Git", slug: "git", categoryId: toolsCat.id, level: SkillLevel.EXPERT, proficiency: 90, yearsOfExp: 2.5, displayOrder: 1 },
     { name: "Postman", slug: "postman", categoryId: toolsCat.id, level: SkillLevel.ADVANCED, proficiency: 85, yearsOfExp: 2.5, displayOrder: 2 },
     { name: "REST API Design", slug: "rest-api-design", categoryId: toolsCat.id, level: SkillLevel.ADVANCED, proficiency: 88, yearsOfExp: 2.5, displayOrder: 3 },
+    { name: "Responsive Design", slug: "responsive-design", categoryId: toolsCat.id, level: SkillLevel.ADVANCED, proficiency: 90, yearsOfExp: 2.5, displayOrder: 4 },
+    { name: "SEO Optimization", slug: "seo-optimization", categoryId: toolsCat.id, level: SkillLevel.ADVANCED, proficiency: 85, yearsOfExp: 2.5, displayOrder: 5 },
+    { name: "State Management", slug: "state-management", categoryId: toolsCat.id, level: SkillLevel.ADVANCED, proficiency: 88, yearsOfExp: 2.5, displayOrder: 6 },
   ];
 
   for (const skill of skillsData) {
     await prisma.skill.upsert({
       where: { slug: skill.slug },
-      update: {},
+      update: {
+        name: skill.name,
+        level: skill.level,
+        proficiency: skill.proficiency,
+        yearsOfExp: skill.yearsOfExp,
+        displayOrder: skill.displayOrder,
+        featured: skill.featured,
+        categoryId: skill.categoryId,
+      },
       create: skill,
     });
   }
@@ -422,15 +433,16 @@ async function main() {
         categoryId: webAppCat.id,
         status: ProjectStatus.COMPLETED,
         featured: true,
+        githubUrl: "https://github.com/gautam-629/kumeji-map",
         displayOrder: 1,
       },
       {
-        title: "Connexo",
+        title: "connexo.app",
         slug: "connexo",
         shortDescription: "Real-time chat application with low-latency messaging.",
         description:
-          "<p>A real-time chat application built with React, TypeScript, Socket.io, and Express.js, supporting low-latency bi-directional messaging with reliable WebSocket handling.</p>",
-        technologies: JSON.stringify(["React", "TypeScript", "Socket.io", "Express.js"]),
+          "<p>A real-time chat application built with React.js, TypeScript, Socket.io, and Express.js, supporting low-latency bi-directional messaging with reliable WebSocket handling.</p>",
+        technologies: JSON.stringify(["React.js", "TypeScript", "Socket.io", "Express.js"]),
         features: JSON.stringify([
           "Real-time bi-directional messaging",
           "Reliable WebSocket connection handling",
@@ -440,6 +452,7 @@ async function main() {
         status: ProjectStatus.COMPLETED,
         featured: true,
         liveUrl: "https://connexo.app",
+        githubUrl: "https://github.com/gautam-629/connexo",
         displayOrder: 2,
       },
       {
@@ -447,8 +460,8 @@ async function main() {
         slug: "tidy-days",
         shortDescription: "Human Resource Management (HRM) software for teams.",
         description:
-          "<p>A full-featured Human Resource Management system built with React, NestJS, and RTK Query, designed to streamline employee management, attendance, and HR workflows.</p>",
-        technologies: JSON.stringify(["React", "NestJS", "RTK Query", "Tailwind CSS"]),
+          "<p>A full-featured Human Resource Management system built with React.js, NestJS, and RTK Query, designed to streamline employee management, attendance, and HR workflows.</p>",
+        technologies: JSON.stringify(["React.js", "NestJS", "RTK Query", "Tailwind CSS"]),
         features: JSON.stringify([
           "Employee management dashboard",
           "Modular frontend and backend architecture",
@@ -457,6 +470,7 @@ async function main() {
         categoryId: hrmCat.id,
         status: ProjectStatus.COMPLETED,
         featured: true,
+        githubUrl: "https://github.com/gautam-629/tidy-days",
         displayOrder: 3,
       },
       {
@@ -475,6 +489,7 @@ async function main() {
         categoryId: webAppCat.id,
         status: ProjectStatus.COMPLETED,
         featured: true,
+        githubUrl: "https://github.com/gautam-629/jobaxle",
         displayOrder: 4,
       },
       {
@@ -482,8 +497,8 @@ async function main() {
         slug: "mobile-khata",
         shortDescription: "Digital ledger app for tracking transactions.",
         description:
-          "<p>A digital ledger (khata) application built with React, Redux, and Express.js, allowing users to track credit and debit transactions digitally.</p>",
-        technologies: JSON.stringify(["React", "Redux", "Tailwind CSS", "Express.js"]),
+          "<p>A digital ledger (khata) application built with React, Redux, and Express, allowing users to track credit and debit transactions digitally.</p>",
+        technologies: JSON.stringify(["React", "Redux", "Tailwind CSS", "Express"]),
         features: JSON.stringify([
           "Digital transaction ledger",
           "Credit/debit tracking",
@@ -492,6 +507,7 @@ async function main() {
         categoryId: mobileAppCat.id,
         status: ProjectStatus.COMPLETED,
         featured: false,
+        githubUrl: "https://github.com/gautam-629/mobile-khata",
         displayOrder: 5,
       },
     ];
