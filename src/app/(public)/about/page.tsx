@@ -5,6 +5,9 @@ export const metadata = { title: "About" };
 export const revalidate = 3600;
 
 export default async function AboutPage() {
+  // Temporary delay to preview the loading screen
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
   const [about, experiences, education, certificates, skills] = await Promise.all([
     prisma.aboutSection.findFirst({ where: { isActive: true } }),
     prisma.experience.findMany({
