@@ -1,0 +1,758 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  FREELANCE
+  INTERNSHIP
+}
+
+enum WorkMode {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+
+enum ProjectStatus {
+  ACTIVE
+  COMPLETED
+  SOLD
+  ARCHIVED
+}
+
+enum ProductStatus {
+  AVAILABLE
+  SOLD
+  COMING_SOON
+  UNDER_DEVELOPMENT
+}
+
+enum RequestStatus {
+  NEW
+  IN_REVIEW
+  QUOTED
+  ACCEPTED
+  REJECTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+  REFUNDED
+  CANCELLED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+// ─────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("ADMIN")
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─────────────────────────────────────────
+// SITE SETTINGS
+// ─────────────────────────────────────────
+
+model SiteSettings {
+  id              String   @id @default(cuid())
+  siteName        String
+  siteTagline     String?
+  siteDescription String?
+  siteLogo        String?
+  siteFavicon     String?
+  siteEmail       String?
+  sitePhone       String?
+  siteAddress     String?
+  siteCountry     String?
+  currency        String   @default("USD")
+  timezone        String   @default("UTC")
+  maintenanceMode Boolean  @default(false)
+  analyticsId     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SocialLink {
+  id           String   @id @default(cuid())
+  platform     String
+  url          String
+  icon         String?
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SeoSettings {
+  id            String   @id @default(cuid())
+  page          String   @unique
+  metaTitle     String?
+  metaDesc      String?
+  keywords      String?
+  ogTitle       String?
+  ogDescription String?
+  ogImage       String?
+  twitterCard   String?
+  canonicalUrl  String?
+  noIndex       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// HERO SECTION
+// ─────────────────────────────────────────
+
+model HeroSection {
+  id               String   @id @default(cuid())
+  greeting         String?
+  title            String
+  highlightedText  String?
+  subtitle         String?
+  description      String?
+  profileImage     String?
+  backgroundImage  String?
+  backgroundVideo  String?
+  primaryCTAText   String?
+  primaryCTAUrl    String?
+  secondaryCTAText String?
+  secondaryCTAUrl  String?
+  resumeUrl        String?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Statistic {
+  id           String   @id @default(cuid())
+  label        String
+  value        String
+  suffix       String?
+  icon         String?
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// ABOUT SECTION
+// ─────────────────────────────────────────
+
+model AboutSection {
+  id           String   @id @default(cuid())
+  headline     String?
+  biography    String
+  profileImage String?
+  resumeUrl    String?
+  location     String?
+  availability String?
+  yearsOfExp   Int?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// EDUCATION
+// ─────────────────────────────────────────
+
+model Education {
+  id           String    @id @default(cuid())
+  institution  String
+  logo         String?
+  degree       String
+  fieldOfStudy String?
+  startDate    DateTime
+  endDate      DateTime?
+  current      Boolean   @default(false)
+  grade        String?
+  description  String?
+  websiteUrl   String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Certificate {
+  id            String    @id @default(cuid())
+  name          String
+  issuer        String
+  issuerLogo    String?
+  issueDate     DateTime
+  expiryDate    DateTime?
+  credentialId  String?
+  credentialUrl String?
+  imageUrl      String?
+  displayOrder  Int       @default(0)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ─────────────────────────────────────────
+// EXPERIENCE
+// ─────────────────────────────────────────
+
+model Experience {
+  id               String         @id @default(cuid())
+  companyName      String
+  companyLogo      String?
+  jobTitle         String
+  employmentType   EmploymentType
+  location         String?
+  workMode         WorkMode?
+  startDate        DateTime
+  endDate          DateTime?
+  currentlyWorking Boolean        @default(false)
+  shortDescription String?
+  description      String
+  responsibilities Json?
+  achievements     Json?
+  technologies     Json?
+  companyWebsite   String?
+  featured         Boolean        @default(false)
+  status           Boolean        @default(true)
+  displayOrder     Int            @default(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+// ─────────────────────────────────────────
+// SKILLS
+// ─────────────────────────────────────────
+
+model SkillCategory {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  icon         String?
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  skills       Skill[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Skill {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+  logo         String?
+  category     SkillCategory @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  level        SkillLevel    @default(INTERMEDIATE)
+  proficiency  Int           @default(80)
+  yearsOfExp   Float?
+  description  String?
+  featured     Boolean       @default(false)
+  displayOrder Int           @default(0)
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// ─────────────────────────────────────────
+// SERVICES
+// ─────────────────────────────────────────
+
+model Service {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  icon          String?
+  shortDesc     String?
+  description   String
+  features      Json?
+  deliverables  Json?
+  technologies  Json?
+  startingPrice Float?
+  priceUnit     String?
+  timeline      String?
+  featured      Boolean  @default(false)
+  displayOrder  Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// PROJECTS
+// ─────────────────────────────────────────
+
+model ProjectCategory {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  icon         String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  projects     Project[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Project {
+  id               String          @id @default(cuid())
+  title            String
+  slug             String          @unique
+  shortDescription String?
+  description      String
+  thumbnail        String?
+  gallery          Json?
+  demoVideo        String?
+  liveUrl          String?
+  githubUrl        String?
+  technologies     Json?
+  features         Json?
+  challenges       Json?
+  solutions        Json?
+  category         ProjectCategory @relation(fields: [categoryId], references: [id])
+  categoryId       String
+  status           ProjectStatus   @default(COMPLETED)
+  clientName       String?
+  clientLogo       String?
+  completedDate    DateTime?
+  featured         Boolean         @default(false)
+  displayOrder     Int             @default(0)
+  isActive         Boolean         @default(true)
+  seoTitle         String?
+  seoDescription   String?
+  viewCount        Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+// ─────────────────────────────────────────
+// PRODUCTS
+// ─────────────────────────────────────────
+
+model ProductCategory {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  icon         String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  products     Product[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Product {
+  id                String          @id @default(cuid())
+  name              String
+  slug              String          @unique
+  tagline           String?
+  description       String
+  images            Json?
+  demoVideo         String?
+  demoUrl           String?
+  brochureUrl       String?
+  price             Float
+  discountedPrice   Float?
+  currency          String          @default("USD")
+  userFeatures      Json?
+  adminFeatures     Json?
+  mobileFeatures    Json?
+  techStack         Json?
+  installationGuide String?
+  documentation     String?
+  demoUsername      String?
+  demoPassword      String?
+  category          ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId        String
+  status            ProductStatus   @default(AVAILABLE)
+  featured          Boolean         @default(false)
+  displayOrder      Int             @default(0)
+  isActive          Boolean         @default(true)
+  seoTitle          String?
+  seoDescription    String?
+  faqs              ProductFaq[]
+  reviews           ProductReview[]
+  orders            Order[]
+  viewCount         Int             @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model ProductFaq {
+  id           String   @id @default(cuid())
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    String
+  question     String
+  answer       String
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// PRODUCT REVIEWS
+// ─────────────────────────────────────────
+
+model ProductReview {
+  id            String   @id @default(cuid())
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     String
+  reviewerName  String
+  reviewerEmail String
+  rating        Int
+  title         String?
+  content       String
+  verified      Boolean  @default(false)
+  helpfulCount  Int      @default(0)
+  approved      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([productId])
+}
+
+// ─────────────────────────────────────────
+// WORKING PRODUCTS
+// ─────────────────────────────────────────
+
+model WorkingProduct {
+  id               String        @id @default(cuid())
+  name             String
+  slug             String        @unique
+  tagline          String?
+  description      String?
+  thumbnail        String?
+  progress         Int           @default(0)
+  launchDate       DateTime?
+  currentMilestone String?
+  features         Json?
+  techStack        Json?
+  status           ProductStatus @default(UNDER_DEVELOPMENT)
+  featured         Boolean       @default(false)
+  displayOrder     Int           @default(0)
+  isActive         Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+// ─────────────────────────────────────────
+// BLOG
+// ─────────────────────────────────────────
+
+model BlogCategory {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String?
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  blogs        Blog[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BlogTag {
+  id        String      @id @default(cuid())
+  name      String
+  slug      String      @unique
+  blogs     BlogToTag[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Blog {
+  id             String       @id @default(cuid())
+  title          String
+  slug           String       @unique
+  excerpt        String?
+  content        String
+  featuredImage  String?
+  category       BlogCategory @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  tags           BlogToTag[]
+  status         BlogStatus   @default(DRAFT)
+  featured       Boolean      @default(false)
+  publishedAt    DateTime?
+  readTimeMin    Int?
+  viewCount      Int          @default(0)
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  comments       Comment[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model BlogToTag {
+  blog   Blog    @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  blogId String
+  tag    BlogTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  String
+
+  @@id([blogId, tagId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  blogId    String
+  name      String
+  email     String
+  content   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// TESTIMONIALS
+// ─────────────────────────────────────────
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  clientName   String
+  company      String?
+  jobTitle     String?
+  photo        String?
+  rating       Int      @default(5)
+  feedback     String
+  projectType  String?
+  featured     Boolean  @default(false)
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// CASE STUDIES
+// ─────────────────────────────────────────
+
+model CaseStudy {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  clientName     String?
+  clientLogo     String?
+  industry       String?
+  featuredImage  String?
+  gallery        Json?
+  problem        String
+  solution       String
+  process        String
+  outcome        String
+  technologies   Json?
+  metrics        Json?
+  testimonialId  String?
+  featured       Boolean  @default(false)
+  displayOrder   Int      @default(0)
+  isActive       Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// CONTACT & LEADS
+// ─────────────────────────────────────────
+
+model ContactMessage {
+  id        String     @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  budget    String?
+  service   String?
+  message   String
+  ipAddress String?
+  status    LeadStatus @default(NEW)
+  notes     String?
+  isRead    Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model ProjectRequest {
+  id          String        @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  projectType String
+  title       String?
+  description String
+  budget      String?
+  timeline    String?
+  attachments Json?
+  status      RequestStatus @default(NEW)
+  notes       String?
+  isRead      Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+// ─────────────────────────────────────────
+// ORDERS
+// ─────────────────────────────────────────
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  product         Product     @relation(fields: [productId], references: [id])
+  productId       String
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+  customerCompany String?
+  amount          Float
+  currency        String      @default("USD")
+  paymentMethod   String?
+  paymentId       String?
+  status          OrderStatus @default(PENDING)
+  notes           String?
+  deliveredAt     DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+// ─────────────────────────────────────────
+// MEDIA LIBRARY
+// ─────────────────────────────────────────
+
+model MediaFile {
+  id           String   @id @default(cuid())
+  fileName     String
+  originalName String
+  url          String
+  publicId     String
+  resourceType String
+  format       String?
+  size         Int?
+  width        Int?
+  height       Int?
+  folder       String?
+  altText      String?
+  caption      String?
+  tags         Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// NEWSLETTER
+// ─────────────────────────────────────────
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  isActive     Boolean  @default(true)
+  subscribedAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// ACTIVITY LOG
+// ─────────────────────────────────────────
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String?
+  entityId  String?
+  metadata  Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
